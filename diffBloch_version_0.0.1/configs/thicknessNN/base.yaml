@@ -1,0 +1,7 @@
+activate: false #set to false when not using
+num_samples: 40 #number of thickesses to generate
+sample_thickness: false # set to true to sample thicknesses, otherwise will only use average thickness
+form: "min_thickness" # can be 'quadratic' or 'min_thickness'
+min_thickness: 100 #required for both quadratic and min_thickness
+max_thickness: 3500 #required for both quadratic and min_thickness
+convexity_loss: false

@@ -1,0 +1,12 @@
+g_max: 2.05 # beam cutoff (1/A): largest |g| of the beams coupled in one Bloch solve. The structure-factor table is derived from it (2 * g_max + 0.5)
+sg_max: 0.02 # max excitation error to include in BW calcs
+device: cpu # device to perform BW calcs on
+use_wave_eq: false # additional approximation for Sg, recommend setting to false
+g_max_sf: 6.0 #1.8 # max g vector to include in refinement
+g_max_refine: 2.0 # max g vector to include in refinement 
+g_min_refine: 0.0 # min g vector to include in refinement 
+thicknesses: [420]
+average_thickness_output: true
+integrated_intensities: true
+optim_thicknesses_path: ??? #/scratch-ssd/tiarty/diffBloch/data/glycine/optim_thicknesses_glycine_r1.csv # overwrite thicknesses if path passed
+optim_orientations_path: ??? # overwrite orientation matrix if path passed[]

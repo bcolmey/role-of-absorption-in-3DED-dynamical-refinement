@@ -1,0 +1,12 @@
+#config file for Atoms class
+data:
+  cif_file_path: ??? # quartz: /scratch-ssd/tiarty/diffBloch/output/debug/2024-10-21-09-30-20/wandb/latest-run/files/refined_structure.cif #
+  restraints_file_path: null # restraints file path if any
+  load_hydrogens: true # load hydrogens from cif file, if false will remove hydrogens from structure
+
+# TODO rename this
+experiment:
+  device: cpu #device to perform asu expansion on
+  isotropic_displacements_only: false # restrict Uani to isotropic only
+  optimize_asu_positions: true
+  optimize_thermal_displacements: true

@@ -1,0 +1,42 @@
+# CsPbBr3, with absorption: forward-only inference.
+# Run with:  infer cspbbr3-absorption
+# ${hydra:runtime.cwd} is the diffBloch_version_0.0.1/ directory, ${repo_root} the repository root.
+# Parameters follow the supporting-information table of the paper.
+
+atoms:
+  data:
+    cif_file_path: ${hydra:runtime.cwd}/data/cspbbr3/cspbbr3.cif
+
+refinement:
+  inference_only: true
+  dataloader:
+    ignore_orientations: []
+    rotation_integration_method: sequential
+    batch_size: 10
+    num_rotations: 59
+  data:
+    pets_path: ${hydra:runtime.cwd}/data/cspbbr3/CsPbBr_P67-crot-050_dyn.cif_pets
+    integration_semiangle: 1.5
+    rocking_curve_sampling: 60
+    dsg: 0.0015
+    rsg: 0.66
+
+bloch:
+  optim_thicknesses_path: null
+  optim_orientations_path: ${hydra:runtime.cwd}/data/cspbbr3/optim_orientation_abs.csv
+  g_max: 2.5 # beam cutoff (1/A); the structure-factor table extends to 2 * g_max + 0.5
+  g_max_refine: 2.0
+  sg_max: 0.02
+
+structure_factor:
+  absorption: true
+
+thicknessNN:
+  activate: false # the network is never evaluated; its exported curve is used below
+
+inference:
+  name: cspbbr3-absorption
+  thickness_curve: ${repo_root}/absorption_paper_source_data/refinement_results/cspbbr_abs/thickness.csv # per-orientation thickness; null = flat
+  thickness: 489.0404 # flat thickness in Angstrom, used when thickness_curve is null
+  rotations: null # null = every orientation, or a list, e.g. [0,1,2]
+  output_dir: ${repo_root}/inference_outputs/cspbbr3-absorption

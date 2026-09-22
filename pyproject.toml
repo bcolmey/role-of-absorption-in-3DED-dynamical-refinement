@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "diffbloch-paper"
+version = "0.0.1"
+description = "Reproduction code for absorption effects in dynamical electron diffraction"
+requires-python = ">=3.11,<3.12"
+dynamic = ["dependencies"]
+
+[project.scripts]
+infer = "diffBloch.main:main"
+
+[tool.setuptools]
+package-dir = {"" = "diffBloch_version_0.0.1"}
+
+[tool.setuptools.packages.find]
+where = ["diffBloch_version_0.0.1"]
+include = ["diffBloch*"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}

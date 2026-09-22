@@ -1,0 +1,10 @@
+#config file for StructureFactorNet
+parameterization: lobato #parameterization of electron scattering factors, options are lobato, kirkland, peng
+cutoff: 'hard' #taper for scattering factor calc, see abtem blochwave docs
+device: cpu #device to perform asu expansion on
+overwrite_occupancy: False
+occupancy: 0.001 #set to 0.01 for approximately kinematical behaviour, only works is overwrite True
+energy: 200e3 #electron energy in eV
+absorption: True #whether to include absorption in scattering factor calc
+absorption_type: param # constant #or param
+absorption_percent: 10

@@ -1,0 +1,42 @@
+# Borane, without absorption (elastic only): forward-only inference.
+# Run with:  infer borane-no-abs
+# ${hydra:runtime.cwd} is the diffBloch_version_0.0.1/ directory, ${repo_root} the repository root.
+# Parameters follow the supporting-information table of the paper.
+
+atoms:
+  data:
+    cif_file_path: ${hydra:runtime.cwd}/data/borane/borane_no_abs.cif
+
+refinement:
+  inference_only: true
+  dataloader:
+    ignore_orientations: []
+    rotation_integration_method: sequential
+    batch_size: 10
+    num_rotations: 59
+  data:
+    pets_path: ${hydra:runtime.cwd}/data/borane/borane_dyn_final_16.cif_pets
+    integration_semiangle: 1.35
+    rocking_curve_sampling: 125
+    dsg: 0.0
+    rsg: 0.66
+
+bloch:
+  optim_thicknesses_path: null
+  optim_orientations_path: ${hydra:runtime.cwd}/data/borane/optim_orientation_no_abs.csv
+  g_max: 2.5 # beam cutoff (1/A); the structure-factor table extends to 2 * g_max + 0.5
+  g_max_refine: 1.7
+  sg_max: 0.01
+
+structure_factor:
+  absorption: false
+
+thicknessNN:
+  activate: false # the network is never evaluated; its exported curve is used below
+
+inference:
+  name: borane-no-abs
+  thickness_curve: ${repo_root}/absorption_paper_source_data/refinement_results/borane_no_abs/thickness.csv # per-orientation thickness; null = flat
+  thickness: 1950 # flat thickness in Angstrom, used when thickness_curve is null
+  rotations: null # null = every orientation, or a list, e.g. [0,1,2]
+  output_dir: ${repo_root}/inference_outputs/borane-no-abs

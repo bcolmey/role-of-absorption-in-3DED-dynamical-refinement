@@ -1,0 +1,53 @@
+inference_only: false # skip training and only perform inference, save intensities and metrics on val set
+epochs: 200
+
+dataloader:
+  ignore_orientations: ??? # [69, 72, 98, 17] #[69, 72, 98, 17] #[0,1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17, 21,22, 23, 24, 25, 27, 28, 29, 30, 32, 33,34, 35,36,37,38,39,40,41,42, 43, 44, 45,46,47,48,49, 53, 54, 55, 58, 63, 64, 65,66,67,68,69,70,71,72,73, 74,75,76,77,78,79,80,81,82,83,84,85,89,90,92,93,94,95,96, 97, 98] # [69, 72, 98, 17] # [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,52,53,54,55,56,57,58,59,60]
+  rotation_integration_method: random # random, sequential or single
+  batch_size: 10 #batch size for training
+  val_prop: 1.0
+  num_rotations: 99 # if want to subsample the dataset
+
+# TODO use hydra instantiation to set these
+optimizer:
+  name: adam
+  lr: 0.0001
+  lr_disps: 0.001
+  lr_thickness_model: 0.001
+  weight_decay: 0.0
+
+scheduler:
+  name: constant
+  step_size: 100
+  gamma: 0.1
+
+loss:
+  diffraction_loss: wrbragg
+  bond_length_loss: flat_bottomed_l1_loss
+  bond_length_loss_weight: 1.0
+  angle_loss: flat_bottomed_l1_loss
+  angle_loss_weight: 1.0
+  plane_loss: mse
+  plane_loss_weight: 10.0
+  restraint_sigma: 5
+  rigid_bond_loss: mse # mse, l1 etc.
+  rigid_bond_loss_weight: 000.0
+  vg_symmetry_mag_loss: flat_bottomed_l1_loss # flat_bottomed, mse
+  vg_symmetry_mag_loss_weight: 1000.0
+  vg_symmetry_phase_loss: mse # flat_bottomed, gaussian
+  vg_symmetry_phase_loss_weight: 1000.0
+  vg_percentage_change_loss: flat_bottomed_percentage_difference # flat_bottomed, mse
+  vg_percentage_change_loss_weight: 1000.0
+  constraint_anneal_schedule: constant  # constant, linear,
+  constraint_anneal_steps: 30
+
+
+
+data:
+  pets_path: ???
+  apply_u_matrix: true
+  integration_semiangle:  ??? #integration semiangle of each virtual frame
+  rocking_curve_sampling: ??? #num steps to sample integration angle with (not strictly rocking curve)
+  dsg: ???
+  rsg: ???
+  mosaicity: True
